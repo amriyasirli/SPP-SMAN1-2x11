@@ -17,7 +17,7 @@ class Kelas extends CI_Controller {
     {
         $data = [
             'title' => 'Kelas',
-            'kelas' => $this->db->join('auth', 'auth.id=kelas.walas')->order_by('kelas.kelas', 'ASC')->get('kelas')->result(),
+            'kelas' => $this->db->order_by('nama_kelas', 'ASC')->get('tbl_kelas')->result(),
         ];
         $this->load->view('adminTemplate/header');
         $this->load->view('adminTemplate/topbar');
@@ -41,11 +41,10 @@ class Kelas extends CI_Controller {
     public function add_action ()
     {
         $data = [
-            'kelas' => $this->input->post('kelas'),
-            'walas' => $this->input->post('walas'),
+            'nama_kelas' => $this->input->post('nama_kelas'),
         ];
 
-        $this->db->insert('kelas', $data);
+        $this->db->insert('tbl_kelas', $data);
         redirect('Kelas');
     }
 
@@ -53,7 +52,7 @@ class Kelas extends CI_Controller {
     {
         $data = [
             'title' => 'Kelas',
-            'kelas' => $this->db->join('auth', 'auth.id=kelas.walas')->where('kelas.id_kelas', $id)->get('kelas')->row(),
+            'kelas' => $this->db->where('id_kelas', $id)->get('tbl_kelas')->row(),
         ];
         $this->load->view('adminTemplate/header');
         $this->load->view('adminTemplate/topbar');
@@ -65,12 +64,11 @@ class Kelas extends CI_Controller {
     public function update ($id)
     {
         $data = [
-            'kelas' => $this->input->post('kelas'),
-            'walas' => $this->input->post('walas'),
+            'nama_kelas' => $this->input->post('nama_kelas'),
         ];
 
         $this->db->where('id_kelas', $id);
-        $this->db->update('kelas', $data);
+        $this->db->update('tbl_kelas', $data);
         redirect('Kelas');
     }
     
@@ -78,7 +76,7 @@ class Kelas extends CI_Controller {
     public function delete ($id)
     {
         $this->db->where('id_kelas', $id);
-        $this->db->delete('kelas');
+        $this->db->delete('tbl_kelas');
         redirect('Kelas');
     }
     

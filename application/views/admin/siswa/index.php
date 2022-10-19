@@ -17,38 +17,44 @@
             <div class="row">
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
-                  <div class="card-header">
-                    <a href="<?= base_url('Siswa/add')?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
-                  </div>
+                  <?php if ($this->session->userdata('role') == 1) : ?>
+                    <div class="card-header">
+                      <a href="<?= base_url('Siswa/add')?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>   
+                    </div>
+                  <?php endif; ?>
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-hover table-md" id="myTable">
                         <thead>
                           <tr>
                             <th>No</th>
-                            <th>Nis</th>
+                            <th>Nis/Nisn</th>
                             <th>Nama siswa</th>
                             <th>Kelas</th>
-                            <!-- <th>Terdaftar</th> -->
-                            <th>Action</th>
+                            <th>Foto</th>
+                            <?php if ($this->session->userdata('role') == 1) : ?>
+                              <th>Action</th>
+                            <?php endif; ?>
                           </tr>
                         </thead>
                         <tbody>
                           <?php
                               $no = 1;
                               foreach ($siswa as $row) :
-                                $kelas = $this->db->get_where('kelas', ['id_kelas'=>$row->kelas])->row();
+                                // $kelas = $this->db->get_where('nama_kelas', ['id_kelas'=>$row->id_kelas])->row();
                           ?> 
                               <tr>
                               <td><?= $no++; ?></td>
-                              <td><?= $row->id; ?></td>
+                              <td><?= $row->id_siswa; ?></td>
                               <td><?= $row->nama_siswa; ?></td>
-                              <td><?= $kelas->kelas; ?></td>
-                              <!-- <td><?= $row->data_created; ?></td> -->
-                              <td>
-                                  <a href="<?= base_url('Siswa/update_view/'.$row->id)?>" class="btn btn-info btn-sm">Update</a>
-                                  <a href="<?= base_url('Siswa/delete/'.$row->id)?>" class="btn btn-danger btn-sm">Delete</a>
-                              </td>
+                              <td><?= $row->nama_kelas; ?></td>
+                              <td><img src="<?= base_url('./assets/img/'.$row->foto)?>" class="img-fluid rounded" width="80" alt=""></td>
+                              <?php if ($this->session->userdata('role') == 1) : ?>
+                                <td>
+                                    <a href="<?= base_url('Siswa/update_view/'.$row->id_siswa)?>" class="btn btn-info btn-sm">Update</a>
+                                    <a href="<?= base_url('Siswa/delete/'.$row->id_siswa)?>" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                              <?php endif; ?>
                               </tr>
 
                           <?php endforeach; ?>

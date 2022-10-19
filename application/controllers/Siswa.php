@@ -17,7 +17,12 @@ class Siswa extends CI_Controller {
     {
         $data = [
             'title' => 'Siswa',
-            'siswa' => $this->db->order_by('kelas', 'ASC')->order_by('nama_siswa', 'ASC')->get('siswa')->result(),
+            'siswa' => $this->db->select('*')
+                                ->join('tbl_kelas', 'tbl_kelas.id_kelas=tbl_siswa.id_kelas')
+                                ->order_by('nama_kelas', 'ASC')
+                                ->order_by('nama_siswa', 'ASC')
+                                ->get('tbl_siswa')
+                                ->result(),
         ];
         $this->load->view('adminTemplate/header');
         $this->load->view('adminTemplate/topbar');
@@ -40,53 +45,37 @@ class Siswa extends CI_Controller {
 
     public function add_action ()
     {
-        $semester = $this->db->get('semester')->row();
-        $data = [
-            'id' => $this->input->post('id'),
-            'nama_siswa' => $this->input->post('nama_siswa'),
-            'kelas' => $this->input->post('kelas'),
-            'alamat' => $this->input->post('alamat'),
-        ];
+        //pengaturan upload foto
+        $config['encrypt_name']        = TRUE;
+        $config['allowed_types'] = 'svg|jpg|png|jpeg';
+        $config['max_size']     = '2048';
+        $config['upload_path'] = './assets/img/';
 
-        $this->db->insert('siswa', $data);
-
-        $user = [
-            'nama' => $this->input->post('nama_siswa'),
-            'username' => $this->input->post('id'),
-            'password' => password_hash($this->input->post('id'), PASSWORD_DEFAULT),
-            'role' => 6,
-            'foto' => 'avatar-4.png',
-        ];
-
-        $this->db->insert('auth', $user);
-
-        $QueryMapel = $this->db->get('mapel')->result();
-
-            
-        foreach ($QueryMapel as $row) :
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('foto')) {
+            $foto = $this->upload->data('file_name'); 
             $data = [
-                'id_siswa' => $this->input->post('id'),
-                'kelas' => $this->input->post('kelas'),
-                'mapel' => $row->id_mapel,
-                'semester' => $semester->smt,
-                'harian' => 0,
-                'uts' => 0,
-                'uas' => 0,
-                'status' => 0,
+                'id_siswa' => $this->input->post('id_siswa'),
+                'nama_siswa' => $this->input->post('nama_siswa'),
+                'id_kelas' => $this->input->post('id_kelas'),
+                'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+                'tanggal_lahir' => $this->input->post('tanggal_lahir'),
+                'foto' => $foto
             ];
-    
-            $this->db->insert('nilai', $data);
-            
-        endforeach;
-        
+
+        $this->db->insert('tbl_siswa', $data);
         redirect('Siswa');
+        } else {
+            echo $this->upload->display_errors();
+        }
     }
 
     public function update_view ($id)
     {
         $data = [
             'title' => 'Siswa',
-            'siswa' => $this->db->where('id', $id)->get('siswa')->row(),
+            'siswa' => $this->db->join('tbl_kelas', 'tbl_kelas.id_kelas=tbl_siswa.id_kelas')
+                                ->where('id_siswa', $id)->get('tbl_siswa')->row(),
         ];
         $this->load->view('adminTemplate/header');
         $this->load->view('adminTemplate/topbar');
@@ -98,68 +87,24 @@ class Siswa extends CI_Controller {
     public function update ($id)
     {
         $data = [
-            'id' => $this->input->post('id'),
+            'id_siswa' => $this->input->post('id_siswa'),
             'nama_siswa' => $this->input->post('nama_siswa'),
-            'kelas' => $this->input->post('kelas'),
-            'alamat' => $this->input->post('alamat'),
+            'id_kelas' => $this->input->post('id_kelas'),
+            'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+            'tanggal_lahir' => $this->input->post('tanggal_lahir'),
         ];
 
-        $this->db->where('id', $id);
-        $this->db->update('siswa', $data);
-
-        $user = [
-            'nama' => $this->input->post('nama_siswa'),
-        ];
-
-        $this->db->where('username', $id);
-        $this->db->update('auth', $user);
+        $this->db->where('id_siswa', $id);
+        $this->db->update('tbl_siswa', $data);
         redirect('Siswa');
     }
     
     
     public function delete ($id)
     {
-        $nilai = $this->db->where('id_siswa', $id)->get('nilai')->result();
-
-            
-        foreach ($nilai as $row) :
-            $this->db->where('id', $row->id);
-            $this->db->delete('nilai');
-        endforeach;
-
-        $this->db->where('id', $id);
-        $this->db->delete('siswa');
-
-        $this->db->where('username', $id);
-        $this->db->delete('auth');
-
+        $this->db->where('id_siswa', $id);
+        $this->db->delete('tbl_siswa');
         redirect('Siswa');
-    }
-
-    public function siswaDetail($id)
-    {
-        $idUser = $this->session->userdata('id');
-        $data = [
-            'title' => 'Detail Siswa',
-            'siswa' => $this->db->where('id', $id)
-                                ->join('kelas', 'kelas.id_kelas=siswa.kelas')
-                                ->get('siswa')->row(),
-            'nilai' => $this->db->join('kelas', 'kelas.id_kelas=nilai.kelas')
-                                ->join('mapel', 'mapel.id_mapel=nilai.mapel')
-                                ->where('nilai.id_siswa', $id)
-                                ->where('nilai.status', 1)
-                                ->order_by('mapel.kelompok', 'ASC')
-                                ->get('nilai')
-                                ->result(),
-            'sekolah' => $this->db->get('sekolah')->row(),
-            'user' => $this->db->where('id', $idUser)->get('auth')->row(),
-            'semester' => $this->db->get('semester')->row(),
-        ];
-        $this->load->view('adminTemplate/header');
-        $this->load->view('adminTemplate/topbar');
-        $this->load->view('adminTemplate/sidebar');
-        $this->load->view('admin/siswa/detail', $data);
-        $this->load->view('adminTemplate/footer');
     }
     
 }

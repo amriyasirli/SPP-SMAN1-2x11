@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Login &mdash; SIHABEL</title>
+  <title>Login</title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -24,9 +24,11 @@
       <div class="d-flex flex-wrap align-items-stretch">
         <div class="col-lg-4 col-md-6 col-12 order-lg-1 min-vh-100 order-2 bg-white">
           <div class="p-2 m-3">
-            <img src="<?= base_url('assets/') ?>/img/logo-smkn1.png" alt="logo" width="280" class="bg-info shadow-light rounded p-1 mb-5 mt-2">
-            <h4 class="text-dark font-weight-normal">Welcome to <span class="font-weight-bold">SIHABEL</span></h4>
-            <p class="text-muted">Selamat Datang di <i class="font-weight-bold">Sistem Informasi Hasil Belajar Siswa</i> SMKN 1 Panyabungan.</p>
+            <div class="text-center">
+              <img src="<?= base_url('assets/') ?>/img/logo-1.png" alt="logo" width="300" class="bg-white p-1 mb-5 mt-2">
+            </div>
+            <h4 class="text-dark font-weight-normal">Selamat datang di <span class="font-weight-bold"><br>Sistem Informasi Pembayaran SPP </span>SMAN 1 2x11 Enam Lingkung</h4>
+            <p class="text-muted">Login Account !</p>
             
             <?= $this->session->flashdata('pesan') ?>
             <form method="post" action="<?= base_url('Auth')?>" class="needs-validation" novalidate="">
@@ -60,7 +62,7 @@
             </form>
 
             <div class="text-center mt-5 text-small">
-              Copyright &copy; SMKN 1 Panyabungan. <br>
+              Copyright &copy; SMAN 1 2x11 Enam Lingkung. <br>
             </div>
           </div>
         </div>
@@ -69,7 +71,7 @@
             <div class="text-light p-5 pb-2">
               <div class="mb-5 pb-3">
                 <h2 class="mb-2 display-4 font-weight-bold">Selamat Datang di </h2>
-                <h3 class="font-weight-normal text-muted-transparent">SMKN 1 Panyabungan</h3>
+                <h3 class="font-weight-normal text-muted-transparent">SMAN 1 2x11 Enam Lingkung</h3>
               </div>
               <!-- Photo by <a class="text-light bb" target="_blank" href="#">Yuli Anjelina</a>  -->
             </div>

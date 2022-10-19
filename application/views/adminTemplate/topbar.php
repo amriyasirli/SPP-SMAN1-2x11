@@ -15,12 +15,12 @@
             <div class="d-sm-none d-lg-inline-block"><?= $this->session->userdata('nama')?></div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-divider"></div>
-              <a href="<?= base_url('User/update_view/'.$this->session->userdata('id'))?>" class="dropdown-item has-icon">
+              <!-- <a href="<?= base_url('User/update_view/'.$this->session->userdata('id'))?>" class="dropdown-item has-icon">
                 <i class="fas fa-user-alt"></i> Edit Profil
               </a>
               <a href="<?= base_url('User/changePass/'.$this->session->userdata('id'))?>" class="dropdown-item has-icon">
                 <i class="fas fa-key"></i> Ubah Password
-              </a>
+              </a> -->
               <a href="<?= base_url('Auth/logout') ?>" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> Logout
               </a>
