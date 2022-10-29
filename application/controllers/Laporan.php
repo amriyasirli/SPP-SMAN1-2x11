@@ -355,6 +355,7 @@ class Laporan extends CI_Controller {
 
             $pdf->Cell(5);
             $pdf->Cell(10,6,'No',1,0,'C');
+            $pdf->Cell(20,6,'NIS',1,0,'C');
             $pdf->Cell(45,6,'Nama',1,0,'C');
             $pdf->Cell(19,6,'Jan',1,0,'C');
             $pdf->Cell(19,6,'Feb',1,0,'C');
@@ -368,7 +369,7 @@ class Laporan extends CI_Controller {
             $pdf->Cell(19,6,'Okt',1,0,'C');
             $pdf->Cell(19,6,'Nov',1,0,'C');
             $pdf->Cell(19,6,'Des',1,0,'C');
-            $pdf->Cell(35,6,'Keterangan',1,1,'C');
+            $pdf->Cell(25,6,'Keterangan',1,1,'C');
 
             $arrayBulan = [
                 'Januari', 
@@ -391,6 +392,7 @@ class Laporan extends CI_Controller {
                $pdf->SetFont('Times','',11);
                $pdf->Cell(5);
                $pdf->Cell(10,6,$no++,1,0,'C');
+               $pdf->Cell(20,6,$row->id_siswa,1,0,'C');
                $pdf->SetFont('Times','',11);
                $pdf->Cell(45,6,$row->nama_siswa,1,0);
                $pdf->SetFont('Times','',9);
@@ -408,7 +410,7 @@ class Laporan extends CI_Controller {
                     // $pdf->Cell(19,6,'',1,0);
 
                 }
-                $pdf->Cell(35,6,'',1,1,'C');
+                $pdf->Cell(25,6,'',1,1,'C');
             //    $pdf->Cell(19,6,$spp->bulan == 'Februari' ? $spp->jumlah : '',1,0);
             //    $pdf->Cell(19,6,$spp->bulan == 'Maret' ? $spp->jumlah : '',1,0);
             //    $pdf->Cell(19,6,$spp->bulan == 'April' ? $spp->jumlah : '',1,0);
