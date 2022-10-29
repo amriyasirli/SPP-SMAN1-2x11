@@ -22,18 +22,32 @@
                   <div class="card-body">
                     <div class="container-fluid">
                       <div class="row">
-                        <div class="col-md-3 text-center">
-                        </div>
                         <div class="col-md-3">
-                          <form action="<?= base_url('Laporan/filterKelas') ?>" method="post">
+                        <form action="<?= base_url('Laporan/filterKelas') ?>" method="post">
                             <div class="form-group">
-                              <label for="kelas">Pilih Kelas</label>
+                              <label for="kelas">Berdasarkan kelas</label>
                               <select class="form-control" name="kelas" id="kelas" required>
-                                <option value="">- Pilih -</option>
+                                <option value="">- Pilih Kelas -</option>
                                 <?php 
                                   foreach ($kelas as $row) {
                                     # code...
                                     echo "<option value='$row->id_kelas'>$row->nama_kelas</option>";
+                                  } ?>
+                              </select>
+                            </div>
+                            <button type="submit" class="btn btn-outline-primary"><i class="fas fa-file-pdf"></i> Download PDF</button>
+                          </form>
+                        </div>
+                        <div class="col-md-3">
+                          <form action="<?= base_url('Laporan/filterBulan') ?>" method="post">
+                            <div class="form-group">
+                              <label for="bulan">Berdasarkan bulan</label>
+                              <select class="form-control" name="bulan" id="bulan" required>
+                                <option value="">- Pilih Bulan -</option>
+                                <?php 
+                                  foreach ($bulan as $key => $value) {
+                                    # code...
+                                    echo "<option value='$value'>$value</option>";
                                   } ?>
                               </select>
                             </div>

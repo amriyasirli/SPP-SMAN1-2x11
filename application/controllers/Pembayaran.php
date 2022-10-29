@@ -153,8 +153,10 @@ class Pembayaran extends CI_Controller {
 
                 for ($i=0; $i < count($bulan); $i++) { 
                     // Query
+                    // echo($bulan[$i]);
                     $data=$this->Model_pembayaran->display_records($id_siswa, $bulan[$i]);
-
+                    // var_dump($data);
+                    // die();
                     
                     echo "<tr>";
                     echo "<th>".$bulan[$i]."</th>";

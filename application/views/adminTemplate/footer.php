@@ -25,19 +25,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="<?= base_url('assets/admin/') ?>js/stisla.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-  <!-- <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> -->
+  <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> -->
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 
   <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- <script src="<?= base_url('assets/modules/chart.min.js') ?>"></script>
   <script src="<?= base_url('assets/js/page/modules-chartjs.js') ?>"></script> -->
   <!-- Template JS File -->
-  <script src="<?= base_url('assets/admin/') ?>js/scripts.js"></script>
-  <script src="<?= base_url('assets/admin/') ?>js/custom.js"></script> -->
+  <!-- <script src="<?= base_url('assets/admin/') ?>js/scripts.js"></script>
+  <script src="<?= base_url('assets/admin/') ?>js/custom.js"></script> --> -->
   <script src="<?= base_url('assets/admin/') ?>js/rupiah.js"></script>
 
 
@@ -56,7 +56,7 @@
 
   ?>       
 
-  </script>
+  <!-- </script> -->
 
   <script type="text/javascript">
     

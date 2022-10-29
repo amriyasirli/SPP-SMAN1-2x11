@@ -28,14 +28,15 @@
                       <div class="form-group">
                           <label for="username">Username</label>
                         <input type="text" name="username" class="form-control">
+                        <small id="helpId" class="form-text text-danger"><?= form_error('username') ?></small>
                       </div>
                       <div class="form-group">
                           <label for="password1">Password</label>
-                        <input type="text" name="password1" class="form-control">
+                        <input type="password" name="password1" class="form-control">
                       </div>
                       <div class="form-group">
                           <label for="password2">Ulangi Password</label>
-                        <input type="text" name="password2" class="form-control">
+                        <input type="password" name="password2" class="form-control">
                         <small id="helpId" class="form-text text-muted"><?= form_error('password2') ?></small>
                       </div>
                       <div class="form-group">

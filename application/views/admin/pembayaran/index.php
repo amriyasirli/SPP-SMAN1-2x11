@@ -29,7 +29,7 @@
                           <div class="form-group">
                             <label for="id_siswa">NISN/NIS</label>
                             <!-- <input type="text" name="id_siswa" id="id_siswa"> -->
-                            <input type="number" class="form-control" name="id_siswa" id="id_siswa" onKeyup="autofill()">
+                            <input type="number" class="form-control" name="id_siswa" id="id_siswa">
                             <small id="helpId" class="form-text text-success">Ketikan NISN/NIS</small>
                           </div>
                         </div>
