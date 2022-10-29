@@ -46,7 +46,141 @@ class Laporan extends CI_Controller {
         $this->load->view('adminTemplate/footer');
     }
 
-    public function filterBulan()
+    public function filterBulanSudah()
+    {
+        $bulan = $this->input->post('bulan');
+        // printf($bulan);
+        // die();
+        // $kelas = $this->db->where('id_kelas', $id)->get('tbl_kelas')->row();
+        
+        $siswa = $this->db->select('*')
+                          ->join('tbl_kelas', 'tbl_kelas.id_kelas=tbl_siswa.id_kelas')
+                          ->order_by('tbl_kelas.nama_kelas', 'ASC')
+                          ->get('tbl_siswa')
+                          ->result();
+        $periode = $this->db->where('id_periode', 1)->get('tbl_periode')->row();
+
+        // var_dump($pembayaran);
+        // var_dump($siswa);
+        
+        // foreach ($siswa as $row) {
+        //     $pembayaran = $this->db->where('bulan', $bulan)
+        //                     ->get('tbl_pembayaran')
+        //                     ->row();
+        //     if($row->id_siswa == $pembayaran->id_siswa){
+        //         echo 'Sudah Bayar';
+        //         echo '<br>';
+        //         echo $row->id_siswa;
+        //         echo '<br>';
+        //     }else{
+        //         echo 'Belum Bayar';
+        //         echo '<br>';
+        //         echo $row->id_siswa;
+        //         echo '<br>';
+        //     }
+        // }
+
+
+        // die();
+        $pdf = new FPDF('L', 'mm','Legal');
+
+        $pdf->AddPage();
+            
+        $pdf->Cell(10,10,'',0,1);
+        $pdf->Image(base_url('assets/img/logo.png'),55,8,30,0,'PNG');
+        $pdf->Image(base_url('assets/img/tutwuri.png'),268,8,29,0,'PNG');
+        $pdf->SetFont('Arial','B',14);
+        $pdf->Cell(0,8,'DINAS PENDIDIKAN PADANG PARIAMAN',0,1,'C');
+        $pdf->SetFont('Arial','B',18);
+        // $pdf->Cell(0,5,'',0,1,'C');
+        $pdf->Cell(0,8,'SMA NEGERI 1 2x11 ENAM LINGKUNG',0,1,'C');
+        // $pdf->Line(10,$this->GetY(),100,$this->GetY());
+        $pdf->SetFont('Arial','',8);
+        // $pdf->Cell(0,3,' JL. Bari Sicincin',0,1,'C');
+        $pdf->Cell(0,5,'JL. Bari, Sicincin, Padang Pariaman, Sumatera Barat 25584 ',0,1,'C');
+        // $pdf->Cell(0,3,'Website: www.iainbukittinggi.ac.id | email: info@iainbukittinggi.ac.id',0,1,'C');
+        $pdf->SetFont('Arial','',15);
+        $pdf->Cell(0,0.7,'_____________________________________________________________________________________',0,1,'C');
+        $pdf->Cell(0,0.7,'_____________________________________________________________________________________',0,1,'C');
+        $pdf->Cell(10,10,'',0,1);
+
+        $pdf->SetFont('Arial','B',12);
+        $pdf->Cell(0,5,'DATA SISWA BELUM BAYAR SPP ',0,1,'C');
+        $pdf->Cell(0,5,'BULAN '.strtoupper($bulan).' TP. '.$periode->tahun_ajaran,0,1,'C');
+        $pdf->Cell(10,6,'',0,1);
+        $pdf->SetFont('Arial','',12);
+            
+
+            $pdf->Cell(10,6,'',0,1);
+
+            $pdf->SetFont('Times','B',12);
+
+            $pdf->Cell(100);
+            $pdf->Cell(10,6,'No',1,0,'C');
+            $pdf->Cell(20,6,'NISN',1,0,'C');
+            $pdf->Cell(50,6,'Nama',1,0,'C');
+            $pdf->Cell(20,6,'Kelas',1,0,'C');
+            $pdf->Cell(35,6,'Keterangan',1,1,'C');
+
+            $pdf->SetFont('Times','',12);
+            $no=1;
+
+            foreach ($siswa as $row) {
+                $pembayaran = $this->db->where('bulan', $bulan)
+                                ->get('tbl_pembayaran')
+                                ->row();
+                
+                if($pembayaran){
+                    if($row->id_siswa == $pembayaran->id_siswa){
+                        $pdf->Cell(100);
+                        $pdf->Cell(10,6,$no++,1,0,'C');
+                        $pdf->Cell(20,6,$row->id_siswa,1,0,'C');
+                        $pdf->Cell(50,6,$row->nama_siswa,1,0,'L');
+                        $pdf->Cell(20,6,$row->nama_kelas,1,0,'C');
+                        $pdf->Cell(35,6,'Sudah bayar',1,1,'C');
+                        
+                    }else{
+                        
+                    }
+                }else{
+                    $pdf->Cell(100);
+                    $pdf->Cell(10,6,'No',1,0,'C');
+                    $pdf->Cell(20,6,'No Data',1,0,'C');
+                    $pdf->Cell(50,6,'No Data',1,0,'C');
+                    $pdf->Cell(20,6,'No Data',1,0,'C');
+                    $pdf->Cell(35,6,'No Data',1,1,'C');
+                    break;
+                }
+            }
+            
+            // foreach ($siswa as $row) {
+
+        $pdf->AcceptPageBreak();
+        $pdf->SetFont('Times','',12);
+        $pdf->Cell(10,10,'',0,1);
+        $pdf->Cell(10,10,'',0,1);
+        $pdf->Cell(70);
+        $pdf->Cell(175,5,'Mengetahui,',0,0,'L');
+        $pdf->Cell(75,5,'Bendahara,',0,1,'L');
+        $pdf->Cell(70);
+        $pdf->Cell(175,5,'Kepala Sekolah,',0,0,'L');
+        $pdf->Cell(10,10,'',0,1);
+        $pdf->Cell(70);
+        $pdf->Cell(175,10,'',0,0);
+        $pdf->Cell(75,10,'',0,1);
+        $pdf->Cell(70);
+        $pdf->SetFont('Times','B',12);
+        $pdf->Cell(175,5,'Sri Astuti',0,0,'L');
+        $pdf->Cell(75,5,$this->session->userdata('nama'),0,1,'L');
+        $pdf->SetFont('Times','',12);
+        $pdf->Cell(70);
+        $pdf->Cell(175,5,'NIP. ',0,0,'L');
+        $pdf->Cell(75,5,'NIP. ',0,1,'L');
+
+        $pdf->Output();
+    }
+
+    public function filterBulanBelum()
     {
         $bulan = $this->input->post('bulan');
         // printf($bulan);

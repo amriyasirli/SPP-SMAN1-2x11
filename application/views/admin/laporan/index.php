@@ -39,9 +39,25 @@
                           </form>
                         </div>
                         <div class="col-md-3">
-                          <form action="<?= base_url('Laporan/filterBulan') ?>" method="post">
+                          <form action="<?= base_url('Laporan/filterBulanSudah') ?>" method="post">
                             <div class="form-group">
-                              <label for="bulan">Berdasarkan bulan</label>
+                              <label for="bulan">Sudah Bayar</label>
+                              <select class="form-control" name="bulan" id="bulan" required>
+                                <option value="">- Pilih Bulan -</option>
+                                <?php 
+                                  foreach ($bulan as $key => $value) {
+                                    # code...
+                                    echo "<option value='$value'>$value</option>";
+                                  } ?>
+                              </select>
+                            </div>
+                            <button type="submit" class="btn btn-outline-primary"><i class="fas fa-file-pdf"></i> Download PDF</button>
+                          </form>
+                        </div>
+                        <div class="col-md-3">
+                          <form action="<?= base_url('Laporan/filterBulanBelum') ?>" method="post">
+                            <div class="form-group">
+                              <label for="bulan">Belum Bayar</label>
                               <select class="form-control" name="bulan" id="bulan" required>
                                 <option value="">- Pilih Bulan -</option>
                                 <?php 
