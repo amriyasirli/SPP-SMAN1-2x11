@@ -27,8 +27,8 @@
                         <select class="form-control" name="semester" id="semester">
                           <option value="<?= $periode->semester; ?>"><?= $periode->semester; ?></option>
                           <option disabled></option>
-                          <option value="I (satu)">I (satu)</option>
-                          <option value="II (dua)">II (dua)</option>
+                          <option value="Ganjil">Ganjil</option>
+                          <option value="Genap">Genap</option>
                         </select>
                       </div>
                       <div class="form-group">

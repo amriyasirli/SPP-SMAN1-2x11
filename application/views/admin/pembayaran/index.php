@@ -47,6 +47,27 @@
                             <small id="helpId" class="form-text text-danger">Otomatis terisi*</small>
                           </div>
                         </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="periode">Periode</label>
+                            <select class="form-control" name="periode" id="periode" required>
+                              <option value="<?= $periode->tahun_ajaran ?> <?= $periode->semester ?>">T.A <?= $periode->tahun_ajaran ?>  (<?= $periode->semester ?>)</option>
+                              <option disabled></option>
+                              <?php 
+                                $tahun = date('Y');
+                                $tahunStart = $tahun - 3;
+                                $tahunEnd = $tahunStart+1;
+                                for ($i=0; $i < 5; $i++) { 
+                                  # code...
+                                  $tahunStart += 1;
+                                  $tahunEnd += 1;
+                                  echo '<option value="'.$tahunStart.'/'.$tahunEnd.' Ganjil">T.A '.$tahunStart.'/'.$tahunEnd.' (Ganjil)</option>';
+                                  echo '<option value="'.$tahunStart.'/'.$tahunEnd.' Genap">T.A '.$tahunStart.'/'.$tahunEnd.' (Genap)</option>';
+                                }  
+                              ?>
+                            </select>
+                          </div>
+                        </div>
                         <!-- <div class="col-md-3 text-center">
                           <img src="<?= base_url('assets/img/illustration/download.png') ?>" class="img-fluid"  alt="">
                         </div> -->
@@ -93,16 +114,8 @@
                         </div>
                         <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion">
                           <div class="table">
-                            <table class="table table-bordered table-sm">
-                              <thead class="bg-secondary">
-                                <tr>
-                                  <th class="text-dark text-center">Bulan</th>
-                                  <th class="text-dark text-center">Nominal</th>
-                                  <!-- <th class="text-dark">Aksi</th> -->
-                                </tr>
-                              </thead>
-                              <tbody id="table">
-                              </tbody>
+                            <table class="table table-bordered table-sm" id="table">
+                              
                             </table>
                           </div>
                         </div>
@@ -135,24 +148,14 @@
                     </div>
                     <div class="card-body">
                       <!-- <form action="" method="post"> -->
-                        <div class="row">
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="bulan">Pembayaran Bulan</label>
-                                <select class="form-control" name="bulan" id="bulan">
-                                  <option>- Pilih -</option>
-                                  <?php foreach ($arrayBulan as $key => $value) : ?>
-                                    
-                                    <option value="<?= $value; ?>"><?= $value ;?></option>
-                                  <?php endforeach; ?>
-                                </select>
+                        <div class="row" id="formPembayaran"></div>
+                        <div class="row"  
+                          <div class="col-sm-12">
+                              <div class="form-group">
+                                <label for="jumlah">Nominal (Rp)</label>
+                                <input type="text"
+                                  class="form-control form-control" style="border: solid #6f42c1 2px; height: 80px; font-size: 24px" name="jumlah" id="jumlah"  aria-describedby="helpId" placeholder="Masukan Nominal...">
                               </div>
-                            </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <label for="jumlah">Nominal (Rp)</label>
-                              <input type="text"
-                                class="form-control form-control" style="border: solid #6f42c1 2px; height: 80px; font-size: 24px" name="jumlah" id="jumlah"  aria-describedby="helpId" placeholder="Masukan Nominal...">
                             </div>
                           </div>
                         </div>

@@ -68,6 +68,32 @@
       $('#btnNext').on('click', function() {
         $('#tampil').removeClass('d-none')
         $('#jumlah').focus()
+        $.ajax({
+              url: "<?php echo base_url("Pembayaran/loadTabelAjax");?>",
+              type: "POST",
+              data: {
+                id_siswa: $('#id_siswa').val(),
+                periode: $('#periode').val(),
+              },
+              cache: false,
+              success: function(data){
+                // alert(data);
+                $.ajax({
+                  url: "<?php echo base_url("Pembayaran/loadFormPembayaran");?>",
+                  type: "POST",
+                  data: {
+                    // id_siswa: $('#id_siswa').val(),
+                    periode: $('#periode').val(),
+                  },
+                  cache: false,
+                  success: function(data){
+                    // alert(data);
+                    $('#formPembayaran').html(data); 
+                  }
+                });
+                $('#table').html(data); 
+              }
+            });
       })
 
       $('#id_siswa').on('keyup',function(){
@@ -76,7 +102,10 @@
             type : "POST",
             url  : "<?php echo base_url('Pembayaran/cari')?>",
             dataType : "JSON",
-            data : {id_siswa: id_siswa},
+            data : {
+              id_siswa: id_siswa,
+              // periode: periode,
+            },
             cache:false,
             success: function(data){
                 $.each(data,function(nama_siswa, nama_kelas){
@@ -110,6 +139,7 @@
       $('#btnInsert').on('click', function() {
         var id_siswa = $('#id_siswa').val();
         var bulan = $('#bulan').val();
+        var periode = $('#periodebayar').val();
         var jumlah = $('#jumlah').val();
         var keterangan = $('#keterangan').val();
         if(id_siswa!="" && bulan!="" && jumlah!=""){
@@ -122,6 +152,7 @@
               id_siswa: id_siswa,
               id_guru:2,
               bulan: bulan,
+              periode: periode,
               jumlah: jumlah,
               keterangan: keterangan,
             },
@@ -141,6 +172,7 @@
                   type: "POST",
                   data: {
                     id_siswa: $('#id_siswa').val(),
+                    periode: $('#periode').val(),
                   },
                   cache: false,
                   success: function(data){
@@ -183,6 +215,7 @@
               type: "POST",
               data: {
                 id_siswa: $('#id_siswa').val(),
+                periode: $('#periode').val(),
               },
               cache: false,
               success: function(data){
@@ -233,6 +266,7 @@
           type: "POST",
           data: {
             id_siswa: $('#id_siswa').val(),
+            periode: $('#periode').val(),
           },
           cache: false,
           success: function(data){

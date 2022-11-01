@@ -36,6 +36,7 @@ class Pembayaran extends CI_Controller {
                 'Desember',
             ],
             'record' =>$this->db->get('tbl_siswa'),
+            'periode' =>$this->db->where('id_periode', 1)->get('tbl_periode')->row(),
         ];
         $this->load->view('adminTemplate/header');
         $this->load->view('adminTemplate/topbar');
@@ -132,9 +133,17 @@ class Pembayaran extends CI_Controller {
         echo json_encode($cari);
     }
 
+    public function periodeTabel(){
+        $periode = $this->input->post('periode');
+
+        echo '';
+    }
+
     public function loadTabelAjax()
 	{
                 $id_siswa = $this->input->post('id_siswa');
+                $periodeTitle = $this->input->post('periode');
+                $periode = substr($this->input->post('periode'), 10);
                 $bulan = [
                     'Januari',
                     'Februari',
@@ -150,13 +159,33 @@ class Pembayaran extends CI_Controller {
                     'Desember',
                 ];
 				// $i=1;
+                // var_dump($periode);
 
-                for ($i=0; $i < count($bulan); $i++) { 
+                if ($periode == "Ganjil") {
+                    $i = 0;
+                    $counter = 6;
+                }else if($periode == "Genap"){
+                    $i = 6;
+                    $counter = 12;
+                }
+
+                echo '<thead class="bg-secondary" >
+                            <tr>
+                            <th colspan="2" class="text-dark text-center" id="periodeTabel">TA. '.$periodeTitle.'</th> 
+                            </tr>
+                            <tr>
+                            <th class="text-dark text-center">Bulan</th>
+                            <th class="text-dark text-center">Nominal</th>
+                            <!-- <th class="text-dark">Aksi</th> -->
+                            </tr>
+                        </thead><tbody>';
+                for ($i; $i < $counter; $i++) { 
                     // Query
                     // echo($bulan[$i]);
-                    $data=$this->Model_pembayaran->display_records($id_siswa, $bulan[$i]);
+                    $data=$this->Model_pembayaran->display_records($id_siswa, $bulan[$i], $periodeTitle);
                     // var_dump($data);
                     // die();
+
                     
                     echo "<tr>";
                     echo "<th>".$bulan[$i]."</th>";
@@ -164,6 +193,7 @@ class Pembayaran extends CI_Controller {
                     // Cocokkan SPP dengan Bulan Pembayaran
                         if($data->bulan == $bulan[$i]){
                             echo "<td>
+                                    
                                     <b class='text-success'>".$data->jumlah.",- </b> <small>(".date("d/m/Y", strtotime($data->tanggal_pembayaran)).")</small>"."
                                     <div class='table-links'>
                                         <button type='button' class='btn btn-danger btn-sm mb-1 delete' data-id='$data->id_pembayaran'>
@@ -181,6 +211,7 @@ class Pembayaran extends CI_Controller {
                         }
                     echo "</tr>";
                 }
+                echo '</tbody>';
 
                 // var_dump($value);
                 // die();
@@ -198,6 +229,56 @@ class Pembayaran extends CI_Controller {
 				// 	  $i++;
 				// }
 	}
+
+    public function loadFormPembayaran()
+    {
+        $periode = $this->input->post('periode');
+        if (substr($periode, 10) == "Ganjil") {
+            $arrayBulan = [
+                'Januari',
+                'Februari',
+                'Maret',
+                'April',
+                'Mei',
+                'Juni',
+            ];
+        }else if(substr($periode, 10) == "Genap"){
+            $arrayBulan = [
+                'Juli',
+                'Agustus',
+                'September',
+                'Oktober',
+                'November',
+                'Desember',
+            ];
+        }
+        
+
+        
+        echo '
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="bulan">Pembayaran Bulan</label>
+                    <select class="form-control" name="bulan" id="bulan">
+                        <option>- Pilih -</option>';
+                        foreach ($arrayBulan as $key => $value) {
+                        
+                        echo '<option value="'.$value.'"> '.$value.'</option>';
+                       }
+                    echo '</select>
+                </div>
+            </div>';
+            
+            echo '<div class="col-sm-6">
+                <div class="form-group">
+                    <label for="periode">Periode</label>
+                    <input type="text"
+                    class="form-control" name="periode" id="periodebayar" aria-describedby="helpId" value="'.$periode.'" readonly>
+                    <small id="helpId" class="form-text text-danger">Otomatis terisi</small>
+                </div>
+            </div>
+        ';
+    }
 
     
 
@@ -242,6 +323,7 @@ class Pembayaran extends CI_Controller {
 		{
             $id_siswa = $this->input->post('id_siswa');
             $bulan = $this->input->post('bulan');
+            $periode = $this->input->post('periode');
             $cek = $this->db->where('id_siswa', $id_siswa)->where('bulan', $bulan)->get('tbl_pembayaran')->row();
 
             if ($cek) {
@@ -254,6 +336,7 @@ class Pembayaran extends CI_Controller {
                     'id_guru' => $this->input->post('id_guru'),
                     'jumlah' => $this->input->post('jumlah'),
                     'bulan' => $bulan,
+                    'periode' =>$periode,
                     'keterangan' => $this->input->post('keterangan'),
                 ];
         
