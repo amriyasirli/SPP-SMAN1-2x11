@@ -16,7 +16,7 @@ class Guru extends CI_Controller {
     public function index ()
     {
         $data = [
-            'title' => 'Guru',
+            'title' => 'Guru Pengelola',
             'guru' => $this->db->order_by('nama_guru', 'ASC')
                                 ->get('tbl_guru')
                                 ->result(),
@@ -31,7 +31,7 @@ class Guru extends CI_Controller {
     public function add ()
     {
         $data = [
-            'title' => 'Guru',
+            'title' => 'Guru Pengelola',
         ];
         $this->load->view('adminTemplate/header');
         $this->load->view('adminTemplate/topbar');
@@ -61,7 +61,7 @@ class Guru extends CI_Controller {
         if ($this->form_validation->run() == false) {
 
             $data = [
-                'title' => 'Guru',
+                'title' => 'Guru Pengelola',
             ];
             $this->load->view('adminTemplate/header');
             $this->load->view('adminTemplate/topbar');
@@ -107,7 +107,7 @@ class Guru extends CI_Controller {
     public function update_view ($id)
     {
         $data = [
-            'title' => 'Guru',
+            'title' => 'Guru Pengelola',
             'guru' => $this->db->where('id_guru', $id)->get('tbl_guru')->row(),
         ];
         $this->load->view('adminTemplate/header');

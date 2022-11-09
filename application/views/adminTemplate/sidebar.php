@@ -24,7 +24,7 @@
                   <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i><span>Master Data</span></a>
                   <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?= base_url('Siswa') ?>"><i class="far fa-square"></i> <span>Siswa</span></a></li>
-                    <li><a class="nav-link" href="<?= base_url('Guru') ?>"><i class="far fa-square"></i> <span>Guru</span></a></li>
+                    <li><a class="nav-link" href="<?= base_url('Guru') ?>"><i class="far fa-square"></i> <span>Guru Pengelola</span></a></li>
                     <li><a class="nav-link" href="<?= base_url('Kelas') ?>"><i class="far fa-square"></i> <span>Kelas</span></a></li>
                     <li><a class="nav-link" href="<?= base_url('Periode') ?>"><i class="far fa-square"></i> <span>Periode</span></a></li>
                   </ul>

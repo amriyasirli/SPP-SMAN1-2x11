@@ -3,16 +3,16 @@
 <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>Ubah <?= $title ?></h1>
+            <h1>Setting <?= $title ?></h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Home</a></div>
                 <div class="breadcrumb-item"><a href="<?= base_url($title) ?>"><?= $title ?></a></div>
-                <div class="breadcrumb-item">Ubah <?= $title ?></div>
+                <div class="breadcrumb-item">Setting <?= $title ?></div>
             </div>
           </div>
 
           <div class="section-body">
-            <h2 class="section-title">Ubah <?= $title ?></h2>
+            <h2 class="section-title">Setting <?= $title ?></h2>
             <p class="section-lead">Ubah data <?= $title ?></p>
 
             <div class="row">
