@@ -68,12 +68,14 @@
       $('#btnNext').on('click', function() {
         $('#tampil').removeClass('d-none')
         $('#jumlah').focus()
+        var id_siswa = $('#id_siswa').val();
+        var periode = $('#periode').val();
         $.ajax({
               url: "<?php echo base_url("Pembayaran/loadTabelAjax");?>",
               type: "POST",
               data: {
-                id_siswa: $('#id_siswa').val(),
-                periode: $('#periode').val(),
+                id_siswa: id_siswa,
+                periode: periode,
               },
               cache: false,
               success: function(data){
@@ -82,12 +84,14 @@
                   url: "<?php echo base_url("Pembayaran/loadFormPembayaran");?>",
                   type: "POST",
                   data: {
-                    // id_siswa: $('#id_siswa').val(),
-                    periode: $('#periode').val(),
+                    // id_siswa: id_siswa,
+                    periode: periode,
                   },
                   cache: false,
                   success: function(data){
                     // alert(data);
+                    $('#bukti_id_siswa').val(id_siswa)
+                    $('#bukti_periode').val(periode)
                     $('#formPembayaran').html(data); 
                   }
                 });

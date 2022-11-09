@@ -149,13 +149,12 @@
                     <div class="card-body">
                       <!-- <form action="" method="post"> -->
                         <div class="row" id="formPembayaran"></div>
-                        <div class="row"  
+                        <div class="row">  
                           <div class="col-sm-12">
-                              <div class="form-group">
-                                <label for="jumlah">Nominal (Rp)</label>
-                                <input type="text"
-                                  class="form-control form-control" style="border: solid #6f42c1 2px; height: 80px; font-size: 24px" name="jumlah" id="jumlah"  aria-describedby="helpId" placeholder="Masukan Nominal...">
-                              </div>
+                            <div class="form-group">
+                              <label for="jumlah">Nominal (Rp)</label>
+                              <input type="text"
+                                class="form-control form-control" style="border: solid #6f42c1 2px; height: 80px; font-size: 24px" name="jumlah" id="jumlah"  aria-describedby="helpId" placeholder="Masukan Nominal...">
                             </div>
                           </div>
                         </div>
@@ -174,9 +173,20 @@
                     <div class="alert alert-danger alert-dismissible" id="cancel" style="display:none;">
                       <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
                     </div>
-                    <div class="card-footer text-left">
-                      <button class="btn btn-danger">Cancel</button>
-                      <button type="submit" id="btnInsert" class="btn btn-primary">Bayar</button>
+                    <div class="card-footer">
+                      <div class="row">
+                        <div class="col-lg-8 p-2">
+                          <a href="" class="btn btn-danger">Cancel</a>
+                          <button type="submit" id="btnInsert" class="btn btn-primary">Bayar</button>
+                        </div>
+                        <div class="col-lg-4 p-2">
+                          <form method="post" action="<?= base_url('Laporan/CetakBuktiPembayaran')?>">
+                            <input type="hidden" name="bukti_id_siswa" id="bukti_id_siswa" value="">
+                            <input type="hidden" name="bukti_periode" id="bukti_periode" value="">
+                            <button type="submit" class="btn btn-success"><i class="fas fa-download"></i> Cetak Bukti Pembayaran</button>
+                          </form>
+                        </div>
+                      </div>
                     </div>
                   <!-- </form> -->
                 </div>

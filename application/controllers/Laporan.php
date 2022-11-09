@@ -174,8 +174,8 @@ class Laporan extends CI_Controller {
         $pdf->Cell(75,5,$this->session->userdata('nama'),0,1,'L');
         $pdf->SetFont('Times','',12);
         $pdf->Cell(70);
-        $pdf->Cell(175,5,'NIP. ',0,0,'L');
-        $pdf->Cell(75,5,'NIP. ',0,1,'L');
+        $pdf->Cell(175,5,'NIP. 196312241989032006',0,0,'L');
+        $pdf->Cell(75,5,'NIP. '.$this->session->userdata('nip'),0,1,'L');
 
         $pdf->Output();
     }
@@ -307,8 +307,8 @@ class Laporan extends CI_Controller {
         $pdf->Cell(75,5,$this->session->userdata('nama'),0,1,'L');
         $pdf->SetFont('Times','',12);
         $pdf->Cell(70);
-        $pdf->Cell(175,5,'NIP. ',0,0,'L');
-        $pdf->Cell(75,5,'NIP. ',0,1,'L');
+        $pdf->Cell(175,5,'NIP. 196312241989032006',0,0,'L');
+        $pdf->Cell(75,5,'NIP. '.$this->session->userdata('nip'),0,1,'L');
 
         $pdf->Output();
     }
@@ -460,46 +460,45 @@ class Laporan extends CI_Controller {
         $pdf->Cell(100,5,$this->session->userdata('nama'),0,1,'L');
         $pdf->SetFont('Times','',12);
         $pdf->Cell(30);
-        $pdf->Cell(200,5,'NIP. ',0,0,'L');
-        $pdf->Cell(100,5,'NIP. ',0,1,'L');
+        $pdf->Cell(200,5,'NIP. 196312241989032006',0,0,'L');
+        $pdf->Cell(100,5,'NIP. '.$this->session->userdata('nip'),0,1,'L');
 
         $pdf->Output();
     }
 	
     
-    function cetaksiswa()
-	{
-
+    public function CetakBuktiPembayaran()
+    {
+        $id_siswa = $this->input->post('bukti_id_siswa');
+        $periode = $this->input->post('bukti_periode');
+        $siswa = $this->db->where('id_siswa', $id_siswa)->get('tbl_siswa')->row();
         
-        // $siswa = $this->Siswa_model->show()->result();
 
-        // $siswa = $this->db->get_where('siswa', ['nis'=>$nis])->row();
-
-
-        // var_dump(array_sum($total));
-        $pdf = new FPDF('L', 'mm','A4');
+        $pdf = new FPDF('P', 'mm','Legal');
 
         $pdf->AddPage();
             
             $pdf->Cell(10,10,'',0,1);
-            // $pdf->Image(base_url('assets/logo.png'),50,14,20,0,'PNG');
-            // $pdf->Image(base_url('assets/tutwuri.jpg'),230,13,20,0,'JPG');
+            $pdf->Image(base_url('assets/img/logo.png'),15,8,30,0,'PNG');
+            $pdf->Image(base_url('assets/img/tutwuri.png'),170,8,29,0,'PNG');
             $pdf->SetFont('Arial','B',14);
-            $pdf->Cell(0,5,'DINAS PENDIDIKAN PASAMAN BARAT',0,1,'C');
+            $pdf->Cell(0,8,'DINAS PENDIDIKAN PADANG PARIAMAN',0,1,'C');
+            $pdf->SetFont('Arial','B',18);
             // $pdf->Cell(0,5,'',0,1,'C');
-            $pdf->Cell(0,5,'SMK NEGERI 1 SUNGAI AUR',0,1,'C');
+            $pdf->Cell(0,8,'SMA NEGERI 1 2x11 ENAM LINGKUNG',0,1,'C');
             // $pdf->Line(10,$this->GetY(),100,$this->GetY());
             $pdf->SetFont('Arial','',8);
-            $pdf->Cell(0,3,' JL. Pematang Sontang - Sungai Aur 26372',0,1,'C');
-            $pdf->Cell(0,3,'Sungai Aur, Pasaman Barat, Sumatera Barat  - Telepon: 0232123456 ',0,1,'C');
+            // $pdf->Cell(0,3,' JL. Bari Sicincin',0,1,'C');
+            $pdf->Cell(0,5,'JL. Bari, Sicincin, Padang Pariaman, Sumatera Barat 25584 ',0,1,'C');
             // $pdf->Cell(0,3,'Website: www.iainbukittinggi.ac.id | email: info@iainbukittinggi.ac.id',0,1,'C');
-            $pdf->SetFont('Arial','B',15);
-            $pdf->Cell(0,1,'______________________________________________________',0,1,'C');
+            $pdf->SetFont('Arial','',15);
+            $pdf->Cell(0,0.7,'_______________________________________________________________',0,1,'C');
+            $pdf->Cell(0,0.7,'_______________________________________________________________',0,1,'C');
             $pdf->Cell(10,10,'',0,1);
 
             $pdf->SetFont('Arial','B',12);
-            $pdf->Cell(0,5,'LAPORAN DATA SISWA ',0,1,'C');
-            // $pdf->Cell(0,5,'PRAKTEK KERJA INDUSRTI ',0,1,'C');
+            $pdf->Cell(0,5,'BUKTI PEMBAYARAN SISWA ',0,1,'C');
+            $pdf->Cell(0,5,'TAHUN AJARAN '.substr($periode, 0, 9).' SEMESTER '.strtoupper(substr($periode, 10)),0,1,'C');
             $pdf->Cell(10,6,'',0,1);
             $pdf->SetFont('Arial','',12);
 
@@ -510,416 +509,101 @@ class Laporan extends CI_Controller {
             $pdf->SetFont('Times','B',12);
 
             $pdf->Cell(45);
-            $pdf->Cell(25,6,'Nis',1,0,'C');
-            $pdf->Cell(45,6,'Nama',1,0,'C');
-            $pdf->Cell(50,6,'Jenis Kelamin',1,0,'C');
-            $pdf->Cell(45,6,'Kelas',1,0,'C');
-            $pdf->Cell(25,6,'Terdaftar',1,1,'C');
+            $pdf->Cell(20,8,'NIS',0,0,'L');
+            $pdf->Cell(5,8,':',0,0,'C');
+            $pdf->Cell(50,8,$siswa->id_siswa,0,1,'L');
+            $pdf->Cell(45);
+            $pdf->Cell(20,8,'Nama',0,0,'L');
+            $pdf->Cell(5,8,':',0,0,'C');
+            $pdf->Cell(50,8,$siswa->nama_siswa,0,1,'L');
 
-            $pdf->SetFont('Times','',12);
-        //    foreach ($siswa as $row) {
-               
-        //        $pdf->Cell(45);
-        //        $pdf->Cell(25,6,$row->nis,1,0);
-        //        $pdf->Cell(45,6,$row->nama_siswa,1,0);
-        //        $pdf->Cell(50,6,$row->jk,1,0);
-        //        $pdf->Cell(45,6,$row->nama_kelas,1,0);
-        //        $pdf->Cell(25,6,$row->data_created,1,1,'C');
-
-        //     }
+            $pdf->Cell(10,8,'',0,1); 
             
-            $pdf->SetFont('Times','',12);
+            $pdf->Cell(45);
+            $pdf->Cell(10,8,'No',1,0,'C');
+            $pdf->Cell(20,8,'Bulan',1,0,'L');
+            $pdf->Cell(30,8,'Nominal',1,0,'C');
+            $pdf->Cell(45,8,'Keterangan',1,1,'C');
 
-
-            
-
-            
-        // $pdf->Cell(35,6,array_sum($point5),1,1);
-
-        // $barang = $this->Laporan_model->show()->result();
-        // // $barang = $this->Laporan_model->get()->result();
-        $no=1;
-        // foreach ($barang as $data){
-            // $pdf->Cell(10);
-            // $pdf->Cell(7,6,$no,1,0);
-            // $pdf->Cell(28,6,$non_teknis->nis,1,0);
-            // $pdf->Cell(25,6,$non_teknis->non_1,1,0);
-            // $pdf->Cell(35,6,$non_teknis->non_2,1,0);
-            // $pdf->Cell(25,6,$non_teknis->non_3,1,0);
-            // $pdf->Cell(25,6,$non_teknis->non_4,1,0);
-            
-
-        $pdf->AcceptPageBreak();
-        $pdf->SetFont('Times','',12);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(10,10,'',0,1);
-        // $pdf->Cell(10,10,'',0,1);
-        // $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(200);
-        $pdf->Cell(0,5,'Sungai Aur, '. date('d F Y'),0,1,'L');
-        $pdf->Cell(200);
-        $pdf->Cell(0,5,'Kepala Sekolah',0,1,'L');
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(200);
-        $pdf->SetFont('Times','B',12);
-        $pdf->Cell(0,5,'Hardimentis Marwan,S.Pd,M.Pd.T',0,1,'L');
-        $pdf->SetFont('Times','',12);
-        $pdf->Cell(200);
-        $pdf->Cell(0,5,'NIP. 197803092006041008',0,1,'L');
-        $pdf->Output();
-    }
-
-    function cetakQuiz()
-	{
-        $siswa = $this->Quiz_model->show()->result();
-
-        // $siswa = $this->db->get_where('siswa', ['nis'=>$nis])->row();
-
-
-        // var_dump(array_sum($total));
-        $pdf = new FPDF('P', 'mm','A4');
-
-        $pdf->AddPage();
-            
-            $pdf->Cell(10,10,'',0,1);
-            $pdf->Image(base_url('assets/logo.png'),18,14,20,0,'PNG');
-            $pdf->Image(base_url('assets/tutwuri.jpg'),173,13,20,0,'JPG');
-            $pdf->SetFont('Arial','B',14);
-            $pdf->Cell(0,5,'DINAS PENDIDIKAN KOTA BUKITTINGGI',0,1,'C');
-            // $pdf->Cell(0,5,'',0,1,'C');
-            $pdf->Cell(0,5,'SMK GENUS BUKITTINGGI',0,1,'C');
-            // $pdf->Line(10,$this->GetY(),100,$this->GetY());
-            $pdf->SetFont('Arial','',8);
-            $pdf->Cell(0,3,' JL. BIRUGO BUNGO NO. 137 A TANGAH JUA BUKITTINGGI',0,1,'C');
-            $pdf->Cell(0,3,'Birugo, Kec. Aur Birugo Tigo Baleh, Kota Bukittinggi Prov. Sumatera Barat  - Telepon/Fax:  (0752) 84600 ',0,1,'C');
-            // $pdf->Cell(0,3,'Website: www.iainbukittinggi.ac.id | email: info@iainbukittinggi.ac.id',0,1,'C');
-            $pdf->SetFont('Arial','B',15);
-            $pdf->Cell(0,1,'______________________________________________________',0,1,'C');
-            $pdf->Cell(10,10,'',0,1);
-
-            $pdf->SetFont('Arial','B',12);
-            $pdf->Cell(0,5,'LAPORAN NILAI QUIZ SISWA ',0,1,'C');
-            // $pdf->Cell(0,5,'PRAKTEK KERJA INDUSRTI ',0,1,'C');
-            $pdf->Cell(10,6,'',0,1);
-            $pdf->SetFont('Arial','',12);
-
-            
-
-            $pdf->Cell(10,6,'',0,1);
-
-            $pdf->SetFont('Times','B',12);
-
-            $pdf->Cell(15);
-            $pdf->Cell(25,6,'Nis',1,0,'C');
-            $pdf->Cell(45,6,'Nama',1,0,'C');
-            $pdf->Cell(45,6,'Kelas',1,0,'C');
-            $pdf->Cell(15,6,'Nilai',1,0,'C');
-            $pdf->Cell(25,6,'Tanggal',1,1,'C');
-
-            $pdf->SetFont('Times','',12);
-           foreach ($siswa as $row) {
-               
-               $pdf->Cell(15);
-               $pdf->Cell(25,6,$row->nis,1,0);
-               $pdf->Cell(45,6,$row->nama_siswa,1,0);
-               $pdf->Cell(45,6,$row->nama_kelas,1,0);
-               $pdf->Cell(15,6,$row->nilai_quiz,1,0);
-               $pdf->Cell(25,6,$row->tanggal_quiz,1,1,'C');
-
+            if (substr($periode, 10) == "Ganjil") {
+                $arrayBulan = [
+                    'Januari',
+                    'Februari',
+                    'Maret',
+                    'April',
+                    'Mei',
+                    'Juni',
+                ];
+            }else if(substr($periode, 10) == "Genap"){
+                $arrayBulan = [
+                    'Juli',
+                    'Agustus',
+                    'September',
+                    'Oktober',
+                    'November',
+                    'Desember',
+                ];
             }
-            
-            $pdf->SetFont('Times','',12);
-
-
-            
-
-            
-        // $pdf->Cell(35,6,array_sum($point5),1,1);
-
-        // $barang = $this->Laporan_model->show()->result();
-        // // $barang = $this->Laporan_model->get()->result();
-        $no=1;
-        // foreach ($barang as $data){
-            // $pdf->Cell(10);
-            // $pdf->Cell(7,6,$no,1,0);
-            // $pdf->Cell(28,6,$non_teknis->nis,1,0);
-            // $pdf->Cell(25,6,$non_teknis->non_1,1,0);
-            // $pdf->Cell(35,6,$non_teknis->non_2,1,0);
-            // $pdf->Cell(25,6,$non_teknis->non_3,1,0);
-            // $pdf->Cell(25,6,$non_teknis->non_4,1,0);
-            
-
-        $pdf->AcceptPageBreak();
-        $pdf->SetFont('Times','',12);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(120);
-        $pdf->Cell(0,5,'Bukittinggi, '. date('d F Y'),0,1,'L');
-        $pdf->Cell(120);
-        $pdf->Cell(0,5,'Guru Mata Pelajaran',0,1,'L');
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(120);
-        $pdf->SetFont('Times','B',12);
-        $pdf->Cell(0,5,'Huzar Dani, S. Pd',0,1,'L');
-        $pdf->SetFont('Times','',12);
-        $pdf->Cell(120);
-        $pdf->Cell(0,5,'NIP. ',0,1,'L');
-        $pdf->Output();
-    }
-
-    function cetakTugas()
-	{
-        $siswa = $this->Tugas_model->show()->result();
-
-        // $siswa = $this->db->get_where('siswa', ['nis'=>$nis])->row();
-
-
-        // var_dump(array_sum($total));
-        $pdf = new FPDF('P', 'mm','A4');
-
-        $pdf->AddPage();
-            
-            $pdf->Cell(10,10,'',0,1);
-            $pdf->Image(base_url('assets/logo.png'),18,14,20,0,'PNG');
-            $pdf->Image(base_url('assets/tutwuri.jpg'),173,13,20,0,'JPG');
-            $pdf->SetFont('Arial','B',14);
-            $pdf->Cell(0,5,'DINAS PENDIDIKAN KOTA BUKITTINGGI',0,1,'C');
-            // $pdf->Cell(0,5,'',0,1,'C');
-            $pdf->Cell(0,5,'SMK GENUS BUKITTINGGI',0,1,'C');
-            // $pdf->Line(10,$this->GetY(),100,$this->GetY());
-            $pdf->SetFont('Arial','',8);
-            $pdf->Cell(0,3,' JL. BIRUGO BUNGO NO. 137 A TANGAH JUA BUKITTINGGI',0,1,'C');
-            $pdf->Cell(0,3,'Birugo, Kec. Aur Birugo Tigo Baleh, Kota Bukittinggi Prov. Sumatera Barat  - Telepon/Fax:  (0752) 84600 ',0,1,'C');
-            // $pdf->Cell(0,3,'Website: www.iainbukittinggi.ac.id | email: info@iainbukittinggi.ac.id',0,1,'C');
-            $pdf->SetFont('Arial','B',15);
-            $pdf->Cell(0,1,'______________________________________________________',0,1,'C');
-            $pdf->Cell(10,10,'',0,1);
-
-            $pdf->SetFont('Arial','B',12);
-            $pdf->Cell(0,5,'LAPORAN NILAI TUGAS SISWA ',0,1,'C');
-            // $pdf->Cell(0,5,'PRAKTEK KERJA INDUSRTI ',0,1,'C');
-            $pdf->Cell(10,6,'',0,1);
-            $pdf->SetFont('Arial','',12);
-
-            
-
-            $pdf->Cell(10,6,'',0,1);
-
-            $pdf->SetFont('Times','B',12);
-
-            $pdf->Cell(15);
-            $pdf->Cell(25,6,'Nis',1,0,'C');
-            $pdf->Cell(45,6,'Nama',1,0,'C');
-            $pdf->Cell(45,6,'Kelas',1,0,'C');
-            $pdf->Cell(15,6,'Nilai',1,0,'C');
-            $pdf->Cell(25,6,'Tanggal',1,1,'C');
 
             $pdf->SetFont('Times','',12);
-           foreach ($siswa as $row) {
-               
-               $pdf->Cell(15);
-               $pdf->Cell(25,6,$row->nis,1,0);
-               $pdf->Cell(45,6,$row->nama_siswa,1,0);
-               $pdf->Cell(45,6,$row->nama_kelas,1,0);
-               $pdf->Cell(15,6,$row->nilai,1,0);
-               $pdf->Cell(25,6,$row->tanggal_quiz,1,1,'C');
-
-            }
             
-            $pdf->SetFont('Times','',12);
-
-
-            
-
-            
-        // $pdf->Cell(35,6,array_sum($point5),1,1);
-
-        // $barang = $this->Laporan_model->show()->result();
-        // // $barang = $this->Laporan_model->get()->result();
-        $no=1;
-        // foreach ($barang as $data){
-            // $pdf->Cell(10);
-            // $pdf->Cell(7,6,$no,1,0);
-            // $pdf->Cell(28,6,$non_teknis->nis,1,0);
-            // $pdf->Cell(25,6,$non_teknis->non_1,1,0);
-            // $pdf->Cell(35,6,$non_teknis->non_2,1,0);
-            // $pdf->Cell(25,6,$non_teknis->non_3,1,0);
-            // $pdf->Cell(25,6,$non_teknis->non_4,1,0);
-            
-
-        $pdf->AcceptPageBreak();
-        $pdf->SetFont('Times','',12);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(120);
-        $pdf->Cell(0,5,'Bukittinggi, '. date('d F Y'),0,1,'L');
-        $pdf->Cell(120);
-        $pdf->Cell(0,5,'Guru Mata Pelajaran',0,1,'L');
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(120);
-        $pdf->SetFont('Times','B',12);
-        $pdf->Cell(0,5,'Huzar Dani, S. Pd',0,1,'L');
-        $pdf->SetFont('Times','',12);
-        $pdf->Cell(120);
-        $pdf->Cell(0,5,'NIP. ',0,1,'L');
-        $pdf->Output();
-    }
-
-    function cetakPersonal($id)
-	{
-        $siswa = $this->Siswa_model->get_by_id($id)->row();
-
-        $data['siswa'] = $this->Siswa_model->get_by_id($id)->row();
-		$jml_tugas = $this->db->get_where('tugas', ['nis'=>$id])->num_rows();
-		$tugas = $this->db->get_where('tugas', ['nis'=>$id])->result();
-		if($jml_tugas>0){
-			foreach ($tugas as $t) {
-				$total_tugas[] = $t->nilai;
-			}
-			$data['nilai_tugas'] = array_sum($total_tugas)/$jml_tugas;
-		}else{
-			$data['nilai_tugas'] = 0;
-		}
-		
-		$jml_quiz = $this->db->get_where('quiz', ['nis'=>$id])->num_rows();
-		$quiz = $this->db->get_where('quiz', ['nis'=>$id])->result();
-		if($jml_quiz>0){
-			foreach ($quiz as $q) {
-				$total_quiz[] = $q->nilai_quiz;
-			}
-			$data['nilai_quiz'] = array_sum($total_quiz)/$jml_quiz;
-			$data['nilai_akhir'] = ($data['nilai_tugas']+$data['nilai_quiz'])/2;
-		}else{
-			$data['nilai_quiz'] = 0;
-			$data['nilai_akhir'] = 0;
-
-		}
-
-        // $siswa = $this->db->get_where('siswa', ['nis'=>$nis])->row();
-
-
-        // var_dump(array_sum($total));
-        $pdf = new FPDF('P', 'mm','A4');
-
-        $pdf->AddPage();
-            
-            $pdf->Cell(10,10,'',0,1);
-            $pdf->Image(base_url('assets/logo.png'),18,14,20,0,'PNG');
-            $pdf->Image(base_url('assets/tutwuri.jpg'),173,13,20,0,'JPG');
-            $pdf->SetFont('Arial','B',14);
-            $pdf->Cell(0,5,'DINAS PENDIDIKAN KOTA BUKITTINGGI',0,1,'C');
-            // $pdf->Cell(0,5,'',0,1,'C');
-            $pdf->Cell(0,5,'SMK GENUS BUKITTINGGI',0,1,'C');
-            // $pdf->Line(10,$this->GetY(),100,$this->GetY());
-            $pdf->SetFont('Arial','',8);
-            $pdf->Cell(0,3,' JL. BIRUGO BUNGO NO. 137 A TANGAH JUA BUKITTINGGI',0,1,'C');
-            $pdf->Cell(0,3,'Birugo, Kec. Aur Birugo Tigo Baleh, Kota Bukittinggi Prov. Sumatera Barat  - Telepon/Fax:  (0752) 84600 ',0,1,'C');
-            // $pdf->Cell(0,3,'Website: www.iainbukittinggi.ac.id | email: info@iainbukittinggi.ac.id',0,1,'C');
-            $pdf->SetFont('Arial','B',15);
-            $pdf->Cell(0,1,'______________________________________________________',0,1,'C');
-            $pdf->Cell(10,10,'',0,1);
-
-            $pdf->SetFont('Arial','B',12);
-            $pdf->Cell(0,5,'LAPORAN NILAI TUGAS SISWA ',0,1,'C');
-            // $pdf->Cell(0,5,'PRAKTEK KERJA INDUSRTI ',0,1,'C');
-            $pdf->Cell(10,6,'',0,1);
-            $pdf->SetFont('Arial','',12);
-
-            
-
-            $pdf->Cell(10,6,'',0,1);
-
-            $pdf->SetFont('Times','B',12);
-
-            $pdf->Cell(15);
-            $pdf->Cell(25,6,'Nama',1,0,'C');
-            $pdf->Cell(25,6,$siswa->nama_siswa,1,1,'C');
-            $pdf->Cell(15);
-            $pdf->Cell(45,6,'Nis',1,0,'C');
-            $pdf->Cell(45,6,$siswa->nis,1,1,'C');
-            $pdf->Cell(15);
-            $pdf->Cell(45,6,'Kelas',1,0,'C');
-            $pdf->Cell(45,6,$siswa->nama_kelas,1,1,'C');
-            $pdf->Cell(15);
-            $pdf->Cell(15,6,'J. Kelamin',1,0,'C');
-            $pdf->Cell(15,6,$siswa->jk,1,1,'C');
-            $pdf->Cell(15);
-            $pdf->Cell(25,6,'Terdaftar',1,0,'C');
-            $pdf->Cell(25,6,$siswa->data_created,1,1,'C');
-
-            $pdf->Cell(10,6,'',0,1);
-
-            $pdf->Cell(15);
-            $pdf->Cell(25,6,'No',1,0,'C');
-            $pdf->Cell(45,6,'Modul',1,0,'C');
-            $pdf->Cell(15,6,'Nilai Tugas',1,0,'C');
-            $pdf->Cell(15,6,'Nilai Quiz',1,0,'C');
-            $pdf->Cell(25,6,'Tanggal',1,1,'C');
-
-            $pdf->SetFont('Times','',12);
             $no=1;
-           foreach ($siswa as $row) {
-               
-               $pdf->Cell(15);
-               $pdf->Cell(25,6,$no++,1,0);
-               $pdf->Cell(45,6,$row->nama_siswa,1,0);
-               $pdf->Cell(45,6,$row->nama_kelas,1,0);
-               $pdf->Cell(15,6,$row->nilai,1,0);
-               $pdf->Cell(25,6,$row->tanggal_quiz,1,1,'C');
+            foreach ($arrayBulan as $key => $value) {
+
+                $query = $this->db->select('*')
+                          ->join('tbl_siswa', 'tbl_siswa.id_siswa=tbl_pembayaran.id_siswa')
+                          ->where('tbl_pembayaran.id_siswa', $id_siswa)
+                          ->where('tbl_pembayaran.periode', $periode)
+                          ->where('tbl_pembayaran.bulan', $value)
+                          ->get('tbl_pembayaran')
+                          ->row();
+
+                if($query){
+                    $pdf->Cell(45);
+                    $pdf->Cell(10,8,$no++,1,0,'C');
+                    $pdf->Cell(20,8,$value,1,0,'L');
+                    $pdf->Cell(30,8,$query->jumlah,1,0,'C');
+                    $pdf->Cell(45,8,'Lunas',1,1,'C');
+                }else{
+                    $pdf->Cell(45);
+                    $pdf->Cell(10,8,$no++,1,0,'C');
+                    $pdf->Cell(20,8,$value,1,0,'L');
+                    $pdf->Cell(30,8,'',1,0,'C');
+                    $pdf->Cell(45,8,'Belum Lunas',1,1,'C');
+
+                }
 
             }
-            
-            $pdf->SetFont('Times','',12);
 
-
-            $pdf->Cell(15);
-            $pdf->Cell(100,6,'Rata-Rata Nilai Tugas',1,0,'C');
-            $pdf->Cell(25,6,'',1,0,'C');
-            $pdf->Cell(100,6,'Rata-Rata Nilai Quiz',1,0,'C');
-            $pdf->Cell(25,6,'',1,0,'C');
 
             
-        // $pdf->Cell(35,6,array_sum($point5),1,1);
 
-        // $barang = $this->Laporan_model->show()->result();
-        // // $barang = $this->Laporan_model->get()->result();
-        $no=1;
-        // foreach ($barang as $data){
-            // $pdf->Cell(10);
-            // $pdf->Cell(7,6,$no,1,0);
-            // $pdf->Cell(28,6,$non_teknis->nis,1,0);
-            // $pdf->Cell(25,6,$non_teknis->non_1,1,0);
-            // $pdf->Cell(35,6,$non_teknis->non_2,1,0);
-            // $pdf->Cell(25,6,$non_teknis->non_3,1,0);
-            // $pdf->Cell(25,6,$non_teknis->non_4,1,0);
-            
 
         $pdf->AcceptPageBreak();
         $pdf->SetFont('Times','',12);
         $pdf->Cell(10,10,'',0,1);
         $pdf->Cell(10,10,'',0,1);
+        $pdf->Cell(45);
+        $pdf->Cell(80,5,'Mengetahui,',0,0,'L');
+        $pdf->Cell(40,5,'Bendahara,',0,1,'L');
+        $pdf->Cell(45);
+        $pdf->Cell(80,5,'Kepala Sekolah,',0,0,'L');
         $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(120);
-        $pdf->Cell(0,5,'Bukittinggi, '. date('d F Y'),0,1,'L');
-        $pdf->Cell(120);
-        $pdf->Cell(0,5,'Guru Mata Pelajaran',0,1,'L');
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(10,10,'',0,1);
-        $pdf->Cell(120);
+        $pdf->Cell(45);
+        $pdf->Cell(80,10,'',0,0);
+        $pdf->Cell(40,10,'',0,1);
+        $pdf->Cell(45);
         $pdf->SetFont('Times','B',12);
-        $pdf->Cell(0,5,'Huzar Dani, S. Pd',0,1,'L');
+        $pdf->Cell(80,5,'Sri Astuti',0,0,'L');
+        $pdf->Cell(40,5,$this->session->userdata('nama'),0,1,'L');
         $pdf->SetFont('Times','',12);
-        $pdf->Cell(120);
-        $pdf->Cell(0,5,'NIP. ',0,1,'L');
+        $pdf->Cell(45);
+        $pdf->Cell(80,5,'NIP. 196312241989032006 ',0,0,'L');
+        $pdf->Cell(40,5,'NIP. '.$this->session->userdata('nip'),0,1,'L');
+
         $pdf->Output();
+
+        
     }
     
     

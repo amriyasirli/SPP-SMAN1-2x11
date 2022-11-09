@@ -26,13 +26,13 @@
                         <input type="text" name="nama_guru" value="<?= $guru->nama_guru ?>" class="form-control">
                       </div>
                       <div class="form-group">
-                          <label for="hp">Nomor HP</label>
-                        <input type="text" name="hp" value="<?= $guru->hp ?>" class="form-control">
+                          <label for="nip">NIP</label>
+                        <input type="text" name="nip" value="<?= $guru->nip ?>" class="form-control">
                       </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label for="status">Status</label>
                         <input type="text" name="status" value="<?= $guru->status ?>" class="form-control">
-                      </div>
+                      </div> -->
                       <input type="submit" name="simpan" class="btn btn-primary" value="Simpan Perubahan">
                     </form>
                   </div>

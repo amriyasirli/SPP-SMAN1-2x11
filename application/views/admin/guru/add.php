@@ -40,8 +40,8 @@
                         <small id="helpId" class="form-text text-muted"><?= form_error('password2') ?></small>
                       </div>
                       <div class="form-group">
-                          <label for="hp">No Hp</label>
-                        <input type="text" name="hp" class="form-control">
+                          <label for="nip">NIP</label>
+                        <input type="text" name="nip" class="form-control">
                       </div>
                       <div class="form-group">
                         <label for="foto">Foto</label>

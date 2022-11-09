@@ -81,11 +81,12 @@ class Guru extends CI_Controller {
                 $foto = $this->upload->data('file_name');   
                 $data = [
                     'nama_guru' => $this->input->post('nama_guru'),
-                    'hp' => $this->input->post('hp'),
+                    'nip' => $this->input->post('nip'),
                 ];
         
                 $auth = [
                     'nama' => $this->input->post('nama_guru'),
+                    'nip' => $this->input->post('nip'),
                     'username' => $this->input->post('username'),
                     'password' => password_hash($this->input->post('password2'), PASSWORD_DEFAULT),
                     'foto' => $foto,
@@ -120,7 +121,7 @@ class Guru extends CI_Controller {
     {
         $data = [
             'nama_guru' => $this->input->post('nama_guru'),
-            'hp' => $this->input->post('hp'),
+            'nip' => $this->input->post('nip'),
         ];
 
         $this->db->where('id_guru', $id);

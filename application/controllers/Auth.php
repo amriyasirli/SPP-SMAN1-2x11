@@ -39,6 +39,7 @@ class Auth extends CI_Controller {
                     $data = [
                         'id' => $user['id'],
                         'nama' => $user['nama'],
+                        'nip' => $user['nip'],
                         'username' => $user['username'],
                         'role' => $user['role'],
                         'foto' => $user['foto'],
@@ -90,6 +91,7 @@ class Auth extends CI_Controller {
     {
         $this->session->unset_userdata('id');
         $this->session->unset_userdata('nama');
+        $this->session->unset_userdata('nip');
         $this->session->unset_userdata('username');
         $this->session->unset_userdata('foto');
 

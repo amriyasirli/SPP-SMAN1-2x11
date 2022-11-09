@@ -27,7 +27,7 @@
                           <tr>
                             <th>No</th>
                             <th>Nama Guru</th>
-                            <th>Nomor HP</th>
+                            <th>NIP</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -40,7 +40,7 @@
                               <tr>
                               <td><?= $no++; ?></td>
                               <td><?= $row->nama_guru; ?></td>
-                              <td><?= $row->hp; ?></td>
+                              <td><?= $row->nip; ?></td>
                               <td>
                                   <a href="<?= base_url('Guru/update_view/'.$row->id_guru)?>" class="btn btn-info btn-sm">Update</a>
                                   <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modelId">
